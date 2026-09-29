@@ -1,31 +1,32 @@
 # Turnip Learning
 
-A safe, curated video app where young kids (roughly ages 3–9) explore what they're obsessed with — animals, oceans, science, engines, dance — through age-appropriate learning journeys instead of algorithm rabbit holes. iPad-first, landscape.
+A safe, curated video app where young kids (ages 3–9) explore what they're obsessed with — animals, oceans, science, engines, dance — through age-appropriate learning journeys instead of algorithm rabbit holes. iPhone + iPad.
 
-> **Status:** v0 prototype. A fresh rebuild on the current Expo SDK is in progress — see [TODO.md](TODO.md).
+> **Status:** rebuild in progress on the `rebuild` branch — see [docs/architecture.md](docs/architecture.md) and [TODO.md](TODO.md).
 
 ## Repo layout
 
 ```
 apps/
-  mobile/        iPad app (Expo / React Native) — v0 prototype
-  admin/         Content admin (Next.js) — placeholder
-packages/
-  shared/        Shared TypeScript types
+  kids/          The app — Expo SDK 57, Expo Router (iPhone + iPad)
 design/
-  app-screens/   Magic Patterns web prototype of every screen (run with `npm install && npm run dev`)
+  app-screens/   Magic Patterns web prototype of every screen (`npm install && npm run dev`)
   app-icon/      Icon Composer file (turnip.icon) + Magic Patterns icon study
 docs/
+  architecture.md  Architecture review & rebuild plan
   product/       Product requirements (PRDs)
   business/      Pitch guide, pitches, investor brief, business model canvas
   archive/       Earlier architecture analysis and v0 build notes
 ```
 
-## Running the v0 app
+## Running the app
 
 ```bash
 pnpm install
-pnpm mobile
+pnpm samples   # serves the local sample videos on :8765 (dev only)
+pnpm kids      # starts Expo; press i for the iOS simulator, w for web
 ```
 
-The sample videos (`apps/mobile/assets/videos/`) are not committed — they exceed GitHub's file size limit. Production video is streamed from Mux.
+The iOS simulator needs Xcode. Without it, build in the cloud with `npx eas-cli@latest build --profile simulator --platform ios` from `apps/kids`.
+
+Sample videos aren't committed (too large for GitHub). Put them in `artifacts/TurnipAppSampleVideo/`. Production video streams from Mux.

@@ -225,12 +225,11 @@ docs/              This doc, PRD, business docs, archive
 - **Content source: Sarah's own videos.** No licensing terms or DRM to satisfy. Pilot uses Mux *public* playback IDs for streaming and MP4 downloads — simplest possible setup. Switch to *signed* playback (Edge Function `playback-token`) when paid subscriptions launch, so links can't be shared outside the app. Schema already supports it; no rework.
 - **Pilot audience: families at home first.** School/classroom features (organizations, rosters, teacher assignments) stay in phase 6 and out of the pilot schema. Focus the pilot on parent onboarding, profiles, time limits, and offline downloads.
 - **Devices: iPhone + iPad** in one universal iOS app.
+- **Age range: 3–9**, with two content bands (3–5, 6–9). Supersedes the 3–8 and 5–12 ranges in the older PRDs.
 
-**Still open**
+- **Pilot platforms: iPhone + iPad only.** Android comes later; the Expo codebase stays Android-compatible, but it isn't tested or shipped for the pilot.
 
-1. **Launch age band:** pitch says 3–9; PRDs say 3–8 and 5–12. Proposed: 3–9 with two bands (3–5, 6–9).
-2. **Android at launch**, or iPhone + iPad only for the pilot?
-3. **iPhone designs:** create iPhone layouts in Magic Patterns first, or let the rebuild derive them from the iPad designs and review in the simulator?
+- **Designs:** the rebuild adapts the current iPad designs for iPhone now. Sarah redoes the app designs starting **Oct 1, 2026**. So every screen is built from shared theme tokens and components (`apps/kids/src/theme`, `apps/kids/src/components/ui`) — the redesign should be a reskin, not a rewrite.
 
 ## Appendix: facts not yet verified
 

@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "Turnip",
+    "slug": "turnip-kids",
+    "owner": "sarahbuildsapps",
+    "version": "0.1.0",
+    "scheme": "turnip",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "bundleIdentifier": "com.turnip.kids",
+      "supportsTablet": true,
+      "icon": "./assets/turnip.icon"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/mascot.png",
+          "imageWidth": 220,
+          "backgroundColor": "#A2CE73"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Quicksand-Regular.ttf",
+            "./assets/fonts/Quicksand-Medium.ttf",
+            "./assets/fonts/Quicksand-SemiBold.ttf",
+            "./assets/fonts/Quicksand-Bold.ttf"
+          ]
+        }
+      ],
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": false,
+          "supportsPictureInPicture": false
+        }
+      ],
+      "expo-image",
+      "expo-status-bar",
+      "expo-screen-orientation"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d1ccbda1-5ca4-40ee-8368-24d68d708c4f"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    }
+  }
+}

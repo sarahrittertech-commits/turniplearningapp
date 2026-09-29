@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "kids-web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@turnip/kids", "exec", "expo", "start", "--web", "--port", "8081"],
+      "port": 8081
+    },
+    {
+      "name": "sample-videos",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["samples"],
+      "port": 8765
+    }
+  ]
+}

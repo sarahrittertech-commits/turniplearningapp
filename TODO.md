@@ -1,87 +1,59 @@
-# Turnip App — Deployment TODO
+# Turnip Learning — Rebuild TODO
 
-Track everything that must be done before the app ships.
-
----
-
-## 🔴 Blockers (must fix before any build works)
-
-- [ ] **Install and test EAS simulator build** on device
-  - Download .app artifact from expo.dev build dashboard
-  - Boot a simulator: `xcrun simctl boot "iPad Pro 13-inch (M4)"`
-  - Install: `xcrun simctl install booted Turnip.app`
-  - Launch: `xcrun simctl launch booted com.turnip.kids`
+Plan and reasoning: [docs/architecture.md](docs/architecture.md). The v0 prototype is preserved on the `main` branch history and locally in `artifacts/v0/`.
 
 ---
 
-## 🟡 Content & Backend (before real content can play)
+## Phase 1 — Foundation (in progress)
 
-- [ ] **Migrate local videos → Mux**
-  - Upload all 8 videos in `artifacts/TurnipAppSampleVideo/` to Mux dashboard
-  - Copy the Mux playback IDs for each video
-  - Update `apps/mobile/lib/localCatalog.ts` — replace `source: require(...)` with `muxPlaybackId: '...'`
-  - Remove `apps/mobile/assets/videos/` folder (no longer needed once on Mux)
-  - Update `VideoPlayer` calls to pass `playbackId` instead of `localSource`
-- [ ] Add `GoogleService-Info.plist` to `apps/mobile/ios/Turnip/` and initialize Firebase
-- [ ] Seed Firestore with video catalog data (id, title, category, muxPlaybackId, thumbnailUrl)
-- [ ] Wire home screen to Firestore instead of `localCatalog`
+- [x] New Expo SDK 57 app in `apps/kids` (Expo Router, `src/app`, no committed `ios/`)
+- [x] Theme tokens + layout classes (`src/theme`) — compact (iPhone) / regular (iPad)
+- [x] Shared UI components (`src/components/ui`) — AppText, Tappable, ScreenHeader, Rail, Thumbnail
+- [x] Catalog data layer (`src/data`) with a swappable source — local mock today
+- [x] Screens: Home, Explore (topics), Topic, My Videos (empty state), Player
+- [x] Kid player on `expo-video`: giant Play / Go Home, tap-to-seek, "What's next" at the end
+- [x] Quicksand embedded via config plugin; Icon Composer icon (`assets/turnip.icon`)
+- [x] Type-check, lint, `expo-doctor` (21/21) all pass
+- [x] Web preview checked at iPhone (393×852) and iPad (1366×1024) sizes
+- [ ] **Build and run on iOS simulators** — needs Xcode installed (or an EAS simulator build)
+- [ ] Check iPhone player rotates to landscape; iPad keeps its orientation
+- [ ] Create Supabase project (US region); write schema migrations from architecture §4.5; seed topics/videos/journeys
+- [ ] Add Supabase `CatalogSource` and switch the app to it
+- [ ] Create Mux account; upload the 8 sample videos (basic quality, 720p + 480p static renditions); put playback IDs in the catalog
+- [ ] Supabase Edge Function: Mux `video.asset.ready` webhook → `videos` row
 
----
+## Phase 2 — Kid experience
 
-## 🟡 Auth & Profiles
+- [ ] Journeys screen (play a journey in order, auto-advance)
+- [ ] Watch progress ("keep watching")
+- [ ] Captions support
+- [ ] Friendly offline / no-internet states
 
-- [ ] Implement Firebase Auth (anonymous or Google sign-in for parents)
-- [x] Build profile selector screen (`app/profile/select.tsx`) — dark purple `#2D1050` bg, circular emoji avatars with green ring on selected, edit button, Add account dashed circle, top bar with X + Grown-ups/Settings
-- [ ] Store selected profile in context/SecureStore
-- [ ] Gate home screen behind profile selection
+## Phase 3 — Parents
 
----
+- [ ] Sign in with Apple + email OTP (Supabase Auth)
+- [ ] Parental consent step (COPPA) before creating child profiles
+- [ ] Child profiles (nickname, avatar, age band 3–5 / 6–9) and profile picker
+- [ ] ParentGate component (settings, links, purchases)
+- [ ] Daily time limit, topic filters
+- [ ] Delete / export family data
 
-## 🟡 UI / Design
+## Phase 4 — Offline
 
-- [x] Design tokens extracted to `lib/theme.ts` (colors, spacing, radius, sizes)
-- [x] Home screen (`(tabs)/index.tsx`) — SpotifyKidsHome layout (purple bg, content cards, your stuff, recommended 2×2)
-- [x] Browse screen (`(tabs)/search.tsx`) — BrowsePage layout (green bg, shows carousel, video cards, topics)
-- [x] Library screen (`(tabs)/library.tsx`) — styled with design system
-- [x] Tab bar — dark navy (`#1a1a2e`) with green active state
-- [x] Video player redesigned — large green Play + red Home buttons, seek bar in dark bg, green info bar with controls
-- [x] Load Quicksand font via `expo-font` and apply to all Text (4 weights: Regular, Medium, SemiBold, Bold)
-- [x] Splash screen (green bg, pulsing mascot, fade-in/out) — using `turnipMascot.png`
-- [x] Login / parent screen (`app/login.tsx`) — magenta→yellow gradient, mascot left + email/password card right, Apple sign-in button
-- [ ] Add real thumbnail images to video cards (from Mux or custom assets)
+- [ ] Download manager (`expo-file-system` download tasks) → My Videos
+- [ ] Verify whether downloads continue in the iOS background
 
----
+## Phase 5 — Ship
 
-## 🟡 Video Player
+- [ ] Privacy policy, data-retention policy, security program doc (`docs/security.md`)
+- [ ] App Store Kids Category listing, iPhone 6.9″ + iPad 13″ screenshots
+- [ ] TestFlight pilot with families at home
 
-- [ ] Test playback controls (play/pause, seek bar, back button)
-- [ ] Handle buffering/error states with kid-friendly UI
-- [ ] Verify landscape-only lock works in player
+## Design (from Oct 1, 2026)
 
----
+- [ ] Redo app designs (Sarah). Restyle via `src/theme/tokens.ts` and `src/components/ui` — screens should need few changes.
+- [ ] iPhone layouts for Home, Explore, Player, Profile picker, Login
 
-## 🟢 Nice to Have (post-MVP)
+## Known issues
 
-- [ ] Offline downloads (expo-background-fetch + expo-file-system)
-- [ ] Admin dashboard (Next.js — `apps/admin`)
-- [ ] Parental controls / watch time limits
-- [ ] Video progress tracking (resume where you left off)
-- [x] App icon and splash screen — mascot on brand purple (#73318f) background, 1024x1024 source ready for EAS Build auto-resizing
-
----
-
-## ✅ Done
-
-- [x] EAS Build configured — `eas.json` created, project linked (`@sarahbuildsapps/turnip-kids`, ID: d1ccbda1-5ca4-40ee-8368-24d68d708c4f)
-- [x] First EAS simulator build succeeded — `BUILD SUCCEEDED` (all 120 pod targets compiled)
-
-- [x] BoringSSL clang 26 fix (`withBoringSSLFix` plugin)
-- [x] EXCLUDED_ARCHS + SWIFT_ENABLE_EXPLICIT_MODULES on Turnip target
-- [x] gRPC-Core + gRPC-C++ template keyword fix in Podfile
-- [x] ReactCommon header paths fix (yoga, nativemodule/core)
-- [x] Local video catalog wired up (8 sample videos playable without Mux)
-- [x] VideoPlayer supports both local bundled assets and Mux HLS
-- [x] Home screen shows real video cards by category (ocean, animals, science)
-- [x] Magic Patterns design applied to all main screens (home, browse, library, player)
-- [x] Quicksand font loaded (4 weights) and applied across all screens/components
-- [x] Login screen created (`app/login.tsx`) with gradient + form card layout
+- Web preview only: the video doesn't stretch to fill the player area, and autoplay is blocked by the browser. Web isn't a pilot platform; iOS uses native playback.
