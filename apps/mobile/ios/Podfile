@@ -1,0 +1,279 @@
+require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
+require File.join(File.dirname(`node --print "require.resolve('react-native/package.json')"`), "scripts/react_native_pods")
+
+require 'json'
+podfile_properties = JSON.parse(File.read(File.join(__dir__, 'Podfile.properties.json'))) rescue {}
+
+ENV['RCT_NEW_ARCH_ENABLED'] = podfile_properties['newArchEnabled'] == 'true' ? '1' : '0'
+ENV['EX_DEV_CLIENT_NETWORK_INSPECTOR'] = podfile_properties['EX_DEV_CLIENT_NETWORK_INSPECTOR']
+
+use_autolinking_method_symbol = ('use' + '_native' + '_modules!').to_sym
+origin_autolinking_method = self.method(use_autolinking_method_symbol)
+self.define_singleton_method(use_autolinking_method_symbol) do |*args|
+  if ENV['EXPO_UNSTABLE_CORE_AUTOLINKING'] == '1'
+    Pod::UI.puts('Using expo-modules-autolinking as core autolinking source'.green)
+    config_command = [
+      'node',
+      '--no-warnings',
+      '--eval',
+      'require(require.resolve(\'expo-modules-autolinking\', { paths: [require.resolve(\'expo/package.json\')] }))(process.argv.slice(1))',
+      'react-native-config',
+      '--json',
+      '--platform',
+      'ios'
+    ]
+    origin_autolinking_method.call(config_command)
+  else
+    origin_autolinking_method.call()
+  end
+end
+
+platform :ios, podfile_properties['ios.deploymentTarget'] || '13.4'
+install! 'cocoapods',
+  :deterministic_uuids => false
+
+prepare_react_native_project!
+
+target 'Turnip' do
+  use_expo_modules!
+  config = use_native_modules!
+
+  use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
+  use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] != 'false',
+  )
+
+  post_install do |installer|
+
+  # [withBoringSSLFix] applied
+  installer.pods_project.targets.each do |target|
+    if target.name == 'BoringSSL-GRPC'
+      target.source_build_phase.files.each do |file|
+        if file.settings && file.settings['COMPILER_FLAGS']
+          flags = file.settings['COMPILER_FLAGS'].split
+          flags.reject! { |flag| flag == '-GCC_WARN_INHIBIT_ALL_WARNINGS' }
+          file.settings['COMPILER_FLAGS'] = flags.join(' ')
+        end
+      end
+    end
+    target.build_configurations.each do |config|
+      config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = 'x86_64'
+    end
+  end
+
+  # Note: EXCLUDED_ARCHS[sdk=iphonesimulator*] and SWIFT_ENABLE_EXPLICIT_MODULES
+  # are set directly on the Turnip target via withXcodeProject in the config plugin.
+
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      :ccache_enabled => podfile_properties['apple.ccacheEnabled'] == 'true',
+    )
+
+    # Fix: clang 26 (Xcode 26) rejects gRPC-Core's C++ template keyword usage.
+    # Must run AFTER react_native_post_install so we don't conflict with its
+    # Array-typed OTHER_CPLUSPLUSFLAGS manipulation.
+    installer.pods_project.targets.each do |target|
+      if target.name.start_with?('gRPC')
+        target.build_configurations.each do |build_config|
+          existing = build_config.build_settings['OTHER_CPLUSPLUSFLAGS']
+          flag = '-Wno-missing-template-arg-list-after-template-kw'
+          if existing.is_a?(Array)
+            build_config.build_settings['OTHER_CPLUSPLUSFLAGS'] = existing + [flag] unless existing.include?(flag)
+          elsif existing.is_a?(String)
+            build_config.build_settings['OTHER_CPLUSPLUSFLAGS'] = existing + " #{flag}" unless existing.include?('Wmissing-template-arg-list-after-template-kw')
+          else
+            build_config.build_settings['OTHER_CPLUSPLUSFLAGS'] = "$(inherited) #{flag}"
+          end
+        end
+      end
+    end
+
+    # Fix: With pnpm, CocoaPods computes broken Copy Headers destinations for node_modules pods.
+    # During pod install, Ruby's File.realpath resolves PODS_TARGET_SRCROOT through pnpm symlinks
+    # to the pnpm store. CocoaPods then bakes dstPath values using this pnpm store path, producing
+    # entries like: $(PUBLIC_HEADERS_FOLDER_PATH)/../../../../../../node_modules/.pnpm/...
+    # which at build time resolve to /node_modules/... (nonexistent) → copy errors.
+    #
+    # Two-part fix for each node_modules pod:
+    #   Part 1: Set PUBLIC_HEADERS_FOLDER_PATH to a RELATIVE path (relative to BUILT_PRODUCTS_DIR).
+    #           Using $(CONFIGURATION_BUILD_DIR)/... would be absolute and cause doubled paths.
+    #           - For header_mappings_dir pods: "$(PRODUCT_NAME).framework/Headers"
+    #             (subdirectory structure from hmd provides the namespace)
+    #           - For flat pods: "$(PRODUCT_NAME).framework/Headers" (flat when module_name==header_dir or module_name nil)
+    #             or "$(PRODUCT_NAME).framework/Headers/#{header_dir}" (subdir when module_name != header_dir)
+    #   Part 2: Fix broken dstPath values.
+    #           - For header_mappings_dir pods: decode the correct subdirectory from the broken
+    #             path and reconstruct "$(PUBLIC_HEADERS_FOLDER_PATH)/subdir" — preserving structure
+    #             avoids "Multiple commands produce" collisions from same-named files in diff subdirs.
+    #           - For flat pods: use "$(PUBLIC_HEADERS_FOLDER_PATH)" (no subdirectory needed).
+    installer.pod_targets.each do |pod_target|
+      xcconfig_path = installer.sandbox.target_support_files_root
+        .join(pod_target.name, "#{pod_target.name}.debug.xcconfig")
+      xcconfig_content = xcconfig_path.exist? ? File.read(xcconfig_path.to_s) : ''
+      next unless xcconfig_content.include?('node_modules')
+
+      # Read header_dir and header_mappings_dir from the cached podspec JSON
+      podspec_json_path = installer.sandbox.root.join('Local Podspecs', "#{pod_target.pod_name}.podspec.json")
+      podspec_data = podspec_json_path.exist? ? (JSON.parse(File.read(podspec_json_path.to_s)) rescue {}) : {}
+      header_dir = podspec_data['header_dir'] || pod_target.pod_name
+      module_name = podspec_data['module_name']
+      has_header_mappings = !podspec_data['header_mappings_dir'].nil?
+
+      xcode_target = installer.pods_project.targets.find { |t| t.name == pod_target.name }
+      next unless xcode_target
+
+      # Part 1: Set PUBLIC_HEADERS_FOLDER_PATH (relative to BUILT_PRODUCTS_DIR).
+      # When module_name is set and differs from header_dir (e.g. React-RCTFabric: module_name=RCTFabric,
+      # header_dir=React), headers must go in a 'React/' subdir so <React/Foo.h> includes resolve
+      # via HEADER_SEARCH_PATHS. When module_name is nil or equals header_dir (e.g. React-Core:
+      # header_dir=React → React.framework), headers go flat so <React/Foo.h> resolves via -F.
+      use_header_dir_subdir = !has_header_mappings && module_name && module_name != header_dir
+      headers_path = use_header_dir_subdir ?
+        "$(PRODUCT_NAME).framework/Headers/#{header_dir}" :
+        "$(PRODUCT_NAME).framework/Headers"
+      xcode_target.build_configurations.each do |config|
+        config.build_settings['PUBLIC_HEADERS_FOLDER_PATH'] = headers_path
+      end
+
+      # Part 2: Fix broken dstPath values in all Copy Headers (PBXCopyFilesBuildPhase) entries.
+      if has_header_mappings
+        # Resolve the pnpm store path for this pod's header_mappings_dir so we can
+        # decode the subdirectory from each broken dstPath string.
+        pods_root = installer.sandbox.root.to_s
+        hmd_pnpm_suffix = nil
+        srcroot_match = xcconfig_content.match(/PODS_TARGET_SRCROOT\s*=\s*(.+)/)
+        if srcroot_match
+          srcroot_str = srcroot_match[1].strip
+            .gsub('${PODS_ROOT}', pods_root)
+            .gsub('$(PODS_ROOT)', pods_root)
+          srcroot_realpath = File.realpath(srcroot_str) rescue srcroot_str
+          hmd_dir = podspec_data['header_mappings_dir']
+          hmd_realpath = (hmd_dir && hmd_dir != './' && hmd_dir != '.') ?
+            (File.realpath(File.join(srcroot_realpath, hmd_dir)) rescue srcroot_realpath) :
+            srcroot_realpath
+          parts = hmd_realpath.split('/node_modules/.pnpm/')
+          hmd_pnpm_suffix = parts.last if parts.length > 1
+        end
+
+        xcode_target.build_phases.each do |phase|
+          next unless phase.respond_to?(:dst_path)
+          next unless phase.dst_path.to_s.include?('node_modules')
+          broken_path = phase.dst_path.to_s
+          if hmd_pnpm_suffix && (idx = broken_path.index(hmd_pnpm_suffix))
+            # Extract the subdirectory relative to header_mappings_dir root
+            after_hmd = broken_path[(idx + hmd_pnpm_suffix.length)..].to_s
+              .sub(/^\//, '')   # strip leading slash
+              .sub(/\/\.$/, '') # strip trailing /.
+              .sub(/\/$/, '')   # strip trailing /
+            phase.dst_path = after_hmd.empty? || after_hmd == '.' ?
+              "$(PUBLIC_HEADERS_FOLDER_PATH)" :
+              "$(PUBLIC_HEADERS_FOLDER_PATH)/#{after_hmd}"
+          else
+            # Fallback: flat copy (may cause collision for same-named headers, but
+            # at least avoids the broken /node_modules/... destination error)
+            phase.dst_path = "$(PUBLIC_HEADERS_FOLDER_PATH)"
+          end
+        end
+      else
+        # No header_mappings_dir: flat copy to PUBLIC_HEADERS_FOLDER_PATH (no collisions possible)
+        xcode_target.build_phases.each do |phase|
+          next unless phase.respond_to?(:dst_path)
+          next unless phase.dst_path.to_s.include?('node_modules')
+          phase.dst_path = "$(PUBLIC_HEADERS_FOLDER_PATH)"
+        end
+      end
+    end
+
+    # Additional HEADER_SEARCH_PATHS for pods that lack proper xcconfig dependencies
+    # (e.g. React-debug omits RCT-Folly) or as compile-time fallbacks.
+    # Run AFTER react_native_post_install to avoid being overridden.
+    #
+    # IMPORTANT: react_native_post_install sets HEADER_SEARCH_PATHS as a Ruby Array
+    # for some targets. We must handle both Array and String types correctly to avoid
+    # corrupting the build settings (Array.to_s produces garbage when concatenated).
+    rn_rc = "$(PODS_ROOT)/../../node_modules/react-native/ReactCommon"
+    extra_paths_array = [
+      "#{rn_rc}",                                          # react/debug/*, cxxreact/*
+      "#{rn_rc}/jsi",                                      # jsi/jsi.h
+      "#{rn_rc}/jsiexecutor",                              # jsireact/JSIExecutor.h
+      "#{rn_rc}/reactperflogger",                          # BridgeNativeModulePerfLogger.h
+      "#{rn_rc}/yoga",                                     # yoga/Yoga.h
+      "#{rn_rc}/callinvoker",                              # ReactCommon/CallInvoker.h
+      "#{rn_rc}/runtimeexecutor",                          # ReactCommon/RuntimeExecutor.h
+      "#{rn_rc}/react/nativemodule/core",                  # ReactCommon/TurboModule.h etc.
+      "#{rn_rc}/react/renderer/graphics/platform/ios",     # react/renderer/graphics/Float.h
+      # React-Core fallback: the built framework is React.framework (PRODUCT_NAME=React).
+      # Headers land flat at React.framework/Headers/RCT*.h — FRAMEWORK_SEARCH_PATHS covers this,
+      # but include as HEADER_SEARCH_PATHS fallback for targets that may lack the -F flag.
+      "$(PODS_CONFIGURATION_BUILD_DIR)/React-Core/React.framework/Headers",
+      # React-RCTFabric: module_name=RCTFabric, header_dir=React. Headers land at
+      # RCTFabric.framework/Headers/React/. Adding Headers dir to HEADER_SEARCH_PATHS lets
+      # <React/RCTComponentViewProtocol.h> resolve as React/RCTComponentViewProtocol.h.
+      "$(PODS_CONFIGURATION_BUILD_DIR)/React-RCTFabric/RCTFabric.framework/Headers",
+      "$(PODS_ROOT)/RCT-Folly",                            # folly/Conv.h etc.
+      "$(PODS_ROOT)/boost",                                # boost/...
+      "$(PODS_ROOT)/DoubleConversion",                     # double-conversion/...
+      "$(PODS_ROOT)/glog",                                 # glog/logging.h
+      "$(PODS_ROOT)/fmt/include",                          # fmt/format.h
+    ]
+    extra_paths_str = extra_paths_array.map { |p| "\"#{p}\"" }.join(' ')
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |build_config|
+        existing = build_config.build_settings['HEADER_SEARCH_PATHS']
+        # Check if already patched — handles both Array and String types
+        already_patched = existing.is_a?(Array) ?
+          existing.any? { |p| p.to_s.include?('nativemodule/core') } :
+          existing.to_s.include?('nativemodule/core')
+        next if already_patched
+        if existing.is_a?(Array)
+          # Append as array elements to preserve $(inherited) already in the array
+          build_config.build_settings['HEADER_SEARCH_PATHS'] = existing + extra_paths_array
+        else
+          base = existing.is_a?(String) && !existing.empty? ? existing : '$(inherited)'
+          build_config.build_settings['HEADER_SEARCH_PATHS'] = "#{base} #{extra_paths_str}"
+        end
+      end
+    end
+
+    # This is necessary for Xcode 14, because it signs resource bundles by default
+    # when building for devices.
+    installer.target_installation_results.pod_target_installation_results
+      .each do |pod_name, target_installation_result|
+      target_installation_result.resource_bundle_targets.each do |resource_bundle_target|
+        resource_bundle_target.build_configurations.each do |config|
+          config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+        end
+      end
+    end
+
+    # Fix: Xcode 15+ defaults ENABLE_USER_SCRIPT_SANDBOXING to YES, which blocks
+    # CocoaPods build phase scripts (expo-configure-project.sh) from reading their
+    # own script files. Must be disabled on the main app target (Turnip.xcodeproj),
+    # which is accessible via installer.aggregate_targets — not installer.pods_project.
+    user_projects = installer.aggregate_targets.map(&:user_project).uniq
+    user_projects.each do |user_project|
+      user_project.targets.each do |target|
+        target.build_configurations.each do |config|
+          config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
+        end
+      end
+      user_project.save
+    end
+  end
+
+  post_integrate do |installer|
+    begin
+      expo_patch_react_imports!(installer)
+    rescue => e
+      Pod::UI.warn e
+    end
+  end
+end

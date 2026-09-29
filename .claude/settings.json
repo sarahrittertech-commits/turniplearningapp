@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Read(//Users/sarahritter/Library/Developer/Xcode/DerivedData/Turnip-frhtayiphgjasgcfbvpgnioldzpk/Build/Products/Debug-iphonesimulator/React-debug/React_debug.framework/Headers/**)",
+      "Read(//Users/sarahritter/Library/Developer/Xcode/DerivedData/Turnip-frhtayiphgjasgcfbvpgnioldzpk/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/React-debug.build/**)",
+      "Bash(PATH=\"$HOME/.nvm/versions/node/v24.13.1/bin:$PATH\" pod install:*)",
+      "Bash(pod install)",
+      "Read(//usr/local/bin/**)",
+      "Bash(export:*)",
+      "Bash(source:*)",
+      "Bash(PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:$PATH\" LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 pod install:*)",
+      "Read(//usr/local/Cellar/cocoapods/1.16.2_2/bin/**)",
+      "Bash(PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:/usr/local/bin:$PATH\" LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 /usr/local/bin/pod install:*)",
+      "Bash(PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:/usr/local/bin:/usr/bin:/bin:$PATH\" LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 /usr/local/bin/pod install:*)",
+      "Bash(PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:/usr/local/bin:/usr/bin:/bin:$PATH\" xcodebuild:*)",
+      "Read(//Users/sarahritter/turnip-kids-app/apps/mobile/ios/**)",
+      "Bash(pnpm expo run:ios --help)",
+      "Bash(ls /Users/sarahritter/turnip-kids-app/apps/mobile/ios/*.xcworkspace)",
+      "Bash(ls -lt /tmp/xcodebuild_*.log)",
+      "Bash(LANG=en_US.UTF-8 PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:/usr/local/bin:/usr/bin:$PATH\" pod install)",
+      "Bash(LANG=en_US.UTF-8 PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:$PATH\" pod install)",
+      "Bash(pod --version)",
+      "Bash(LANG=en_US.UTF-8 PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:/usr/local/bin:/usr/bin:$PATH\" /usr/local/bin/pod install)",
+      "Bash(LANG=en_US.UTF-8 PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:/usr/local/bin:/usr/bin:$PATH\" /usr/local/bin/pod install --project-directory=ios)",
+      "Bash(echo $PATH)",
+      "Bash(LANG=en_US.UTF-8 PATH=\"/Users/sarahritter/.nvm/versions/node/v24.13.1/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin\" /usr/local/bin/pod install)",
+      "Bash(pnpm -v)",
+      "Bash(~/.nvm/versions/node/v24.13.1/bin/pnpm -v)",
+      "Bash(/usr/local/bin/pnpm -v)",
+      "Bash(npx pnpm -v)",
+      "WebFetch(domain:www.figma.com)"
+    ],
+    "additionalDirectories": [
+      "/Users/sarahritter/Library/Developer/Xcode/DerivedData/Turnip-frhtayiphgjasgcfbvpgnioldzpk/Build/Products/Debug-iphonesimulator/React-debug"
+    ]
+  }
+}

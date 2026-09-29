@@ -1,0 +1,65 @@
+/* @import url() FONT IMPORTS MUST ALWAYS BE AT THE VERY TOP OF THIS FILE, ABOVE THE TAILWIND IMPORTS — DO NOT DELETE THIS COMMENT */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* CRITICAL: THE FOLLOWING TAILWIND IMPORTS MUST NEVER BE DELETED OR REORDERED — DO NOT DELETE THIS COMMENT */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
+
+* {
+  font-family: 'Quicksand', sans-serif;
+}
+/* iPad Landscape — target 1024×768pt (standard) to 1366×1024pt (13") */
+:root {
+  --safe-top: 20px;
+  --safe-bottom: 20px;
+  --safe-left: 20px;
+  --safe-right: 20px;
+  --home-indicator: 20px;
+  --nav-rail-width: 100px;
+}
+html, body, #root {
+  min-width: 1024px;
+  min-height: 768px;
+  overflow-x: hidden;
+}
+#root {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+/* Subtle scrollbars for kid-friendly experience */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+/* Portrait orientation warning */
+@media screen and (orientation: portrait) {
+  #root::before {
+    content: '📱 Please rotate your iPad to landscape mode';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #A2CE73;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 99999;
+    text-align: center;
+    padding: 40px;
+  }
+}
