@@ -5,6 +5,7 @@ Kids (ages 3–9) curated video app. Founder: Sarah (building with AI tools; exp
 ## Where things are
 
 - `apps/kids` — the app: Expo SDK 57, Expo Router (`src/app`), iPhone + iPad universal. Also read `apps/kids/AGENTS.md` (Expo rules: use versioned docs, `npx expo install`, never hand-edit `ios/`).
+- `docs/brand/turnip-brand-guide.md` — brand guide (colors, type, voice, mascot). Draft; §13 holds unresolved suggestions.
 - `docs/architecture.md` — architecture decisions (source of truth). `TODO.md` — phased plan; keep it updated as tasks finish.
 - `design/app-screens` — Magic Patterns design source. `docs/business`, `docs/product` — pitch/PRD material (public repo, approved by Sarah).
 - Setup on a new machine: `docs/dev-setup.md`.

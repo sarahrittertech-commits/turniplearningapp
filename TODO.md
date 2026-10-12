@@ -51,7 +51,15 @@ Plan and reasoning: [docs/architecture.md](docs/architecture.md). The v0 prototy
 
 ## Design (from Oct 1, 2026)
 
+- [x] Design review + brand guide draft (Oct 11–12) — [docs/brand/design-review-2026-10.md](docs/brand/design-review-2026-10.md), [docs/brand/turnip-brand-guide.md](docs/brand/turnip-brand-guide.md)
+- [x] Clickable iPhone prototype (Wild Explorer direction) on a Claude Design canvas
+- [x] Mascot recolor studies — `design/mascot-recolor/`
+- [ ] Sarah: answer the open questions in the brand guide (palette, background, light-only, mascot recolor)
+- [ ] Final mascot art as vector + expression set (happy, thinking, surprised, celebrating, sleepy, pointing); explorer-hat sketches
+- [ ] Update prototype to the agreed palette, fonts and mascot
 - [ ] Redo app designs (Sarah). Restyle via `src/theme/tokens.ts` and `src/components/ui` — screens should need few changes.
+- [ ] Bundle Fraunces (Soft, SemiBold) + DM Sans; remove Quicksand
+- [ ] Add worlds (Nature, Animals, Earth Science, Biology) → topics to the catalog data model
 - [ ] iPhone layouts for Home, Explore, Player, Profile picker, Login
 
 ## Known issues
