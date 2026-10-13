@@ -55,3 +55,8 @@ apps/mobile/assets/videos/
 ios/build/
 apps/mobile/ios/build/
 .claude/settings.local.json
+
+# v0 captures showing third-party (Nat Geo Kids) footage: keep local
+design/v0/iphone-09-player-controls.png
+design/v0/iphone-10-player-playing.png
+design/v0/*.mp4
