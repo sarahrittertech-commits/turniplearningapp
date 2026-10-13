@@ -5,10 +5,12 @@ Kids (ages 3–9) curated video app. Founder: Sarah (building with AI tools; exp
 ## Where things are
 
 - `apps/kids` — the app: Expo SDK 57, Expo Router (`src/app`), iPhone + iPad universal. Also read `apps/kids/AGENTS.md` (Expo rules: use versioned docs, `npx expo install`, never hand-edit `ios/`).
+- **Redesign in progress — start with `docs/brand/HANDOFF.md`** (current state, Sarah's likes/dislikes, open questions, next steps).
 - `docs/brand/turnip-brand-guide.md` — brand guide (colors, type, voice, mascot). Draft; §13 holds unresolved suggestions.
 - `docs/architecture.md` — architecture decisions (source of truth). `TODO.md` — phased plan; keep it updated as tasks finish.
 - `design/app-screens` — Magic Patterns design source. `docs/business`, `docs/product` — pitch/PRD material (public repo, approved by Sarah).
 - Setup on a new machine: `docs/dev-setup.md`.
+- Session history and reasoning: `docs/history/` (rebuild kickoff, Sept 29) and `docs/brand/design-review-2026-10.md`.
 
 ## Decisions already made (Sept 29, 2026)
 
@@ -19,6 +21,13 @@ Kids (ages 3–9) curated video app. Founder: Sarah (building with AI tools; exp
 - Pilot: families at home, iPhone + iPad only (no Android yet). Age bands 3–5 and 6–9.
 - Apple Kids Category + COPPA (2025 rule): no third-party analytics/ads SDKs in the app (no Mux Data, Sentry, PostHog, Firebase Analytics); parental gate; child profiles = nickname + avatar + age band only.
 - Sarah redoes the visual design starting Oct 1, 2026 → keep all styling in `src/theme/tokens.ts` and `src/components/ui` so screens don't need rewriting.
+
+## Design decisions (Oct 12, 2026; details in `docs/brand/`)
+
+- Brand name **Turnip Learning** (title case); **Turnip** is the mascot.
+- Fonts: **Fraunces** (Soft) for logo and display ≥24 pt; **DM Sans** for all UI. No condensed or all-caps type.
+- Four content worlds (Nature, Animals, Earth Science, Biology) with **bold world colors** used as navigation.
+- No cream, tan, or sand anywhere. Never put Turnip on dark or red-leaning purple, and never crop it into a circle.
 
 ## Conventions
 

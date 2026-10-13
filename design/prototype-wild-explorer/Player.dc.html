@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Video player</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&amp;family=Lexend:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="width: 844px; height: 390px; box-sizing: border-box; background: #000000; color: #FFFFFF; font-family: 'Lexend', system-ui, sans-serif; position: relative; overflow: hidden">
+
+  <img src="/_blob/00ddd0ff5a940997ae032db71e9290f1" alt="Video: a frogfish hiding on a reef" style="position: absolute; inset: 0; width: 844px; height: 390px; object-fit: cover">
+
+  <button onClick="{{ pause }}" aria-label="Pause video" style="position: absolute; inset: 0; width: 844px; height: 390px; background: transparent; border: 0; padding: 0; cursor: pointer"></button>
+
+  <div style="position: absolute; top: 20px; left: 56px; display: flex; align-items: center; gap: 10px; background: #14213D; border-radius: 999px; padding: 8px 16px 8px 8px">
+    <span style="width: 32px; height: 32px; border-radius: 50%; background: #F2A53A; display: flex; align-items: center; justify-content: center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4"></path><path d="M4 4h13l-2 4 2 4H4"></path></svg>
+    </span>
+    <span style="font-size: 14px; font-weight: 600">Ocean Friends · Stop 3: Frogfish</span>
+  </div>
+
+  <div style="position: absolute; top: 20px; right: 56px; max-width: 250px; background: #FFFDF7; color: #14213D; border: 2.5px solid #14213D; border-radius: 16px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; transform: rotate(1.5deg); box-shadow: 0 4px 0 #14213D">
+    <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #2E7D4F">Field fact</span>
+    <span style="font-size: 13px; font-weight: 600; line-height: 1.3">Frogfish wiggle a built-in fishing lure to catch their dinner.</span>
+  </div>
+
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 76px; background: #14213D; display: flex; align-items: center; gap: 14px; padding: 0 56px; box-sizing: border-box">
+    <button aria-label="Back 10 seconds" style="width: 52px; height: 52px; border-radius: 16px; background: #2B63C0; border: 0; color: #FFFFFF; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; flex-shrink: 0">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 19 2 12l9-7z"></path><path d="M22 19l-9-7 9-7z"></path></svg>
+    </button>
+    <span style="font-size: 13px; font-weight: 600; color: #D5DAE6">0:19</span>
+    <div style="flex-grow: 1; height: 10px; border-radius: 5px; background: #33415E; position: relative">
+      <div style="width: 26%; height: 10px; border-radius: 5px; background: #F2A53A"></div>
+      <div style="position: absolute; left: 26%; top: -8px; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: #FFFFFF; border: 3px solid #F2A53A; box-sizing: border-box"></div>
+    </div>
+    <span style="font-size: 13px; font-weight: 600; color: #D5DAE6">1:14</span>
+    <button aria-label="Captions" style="width: 52px; height: 52px; border-radius: 16px; background: #33415E; border: 0; color: #FFFFFF; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; flex-shrink: 0">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M7 15h4"></path><path d="M15 15h2"></path><path d="M7 11h2"></path><path d="M13 11h4"></path></svg>
+    </button>
+    <button aria-label="Sound" style="width: 52px; height: 52px; border-radius: 16px; background: #33415E; border: 0; color: #FFFFFF; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; flex-shrink: 0">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg>
+    </button>
+  </div>
+
+  <sc-if value="{{ paused }}" hint-placeholder-val="{{ true }}">
+    <div style="position: absolute; inset: 0; background: rgba(20, 33, 61, 0.78); display: flex; align-items: center; justify-content: center; gap: 28px">
+      <button onClick="{{ resume }}" style="width: 220px; height: 188px; border-radius: 28px; background: #FF6B57; border: 3px solid #14213D; box-shadow: 0 6px 0 #0B1426; color: #14213D; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; cursor: pointer; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path></svg>
+        Keep watching
+      </button>
+      <a href="Main.dc.html" style="width: 220px; height: 188px; border-radius: 28px; background: #FFFDF7; border: 3px solid #14213D; box-shadow: 0 6px 0 #0B1426; color: #14213D; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 28px; text-transform: uppercase; box-sizing: border-box">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+        Go home
+      </a>
+      <a href="Expedition.dc.html" style="width: 150px; display: flex; flex-direction: column; gap: 8px; color: #FFFFFF">
+        <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: #F2A53A">Next stop</span>
+        <img src="/_blob/1eb0506303d0f6f966859de82aa63e2b" alt="" style="width: 150px; height: 96px; object-fit: cover; border-radius: 14px; border: 3px solid #FFFFFF; box-sizing: border-box">
+        <span style="font-size: 15px; font-weight: 700">Sea Horse</span>
+      </a>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"startPaused":{"editor":"boolean","default":true},"$preview":{"width":844,"height":390}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const paused = this.state.paused ?? (this.props.startPaused ?? true);
+    return {
+      paused,
+      pause: () => this.setState({ paused: true }),
+      resume: () => this.setState({ paused: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>
