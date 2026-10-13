@@ -6,7 +6,8 @@ How to set up a Mac (e.g. the Mac mini) to build and run Turnip.
 
 | Tool | How | Why |
 |---|---|---|
-| **Xcode** (latest) | Mac App Store, then open it once and accept the license. In Xcode → Settings → Components, install the iOS simulator. | iOS builds and simulators |
+| **Xcode 27** (latest) | Mac App Store, then open it once and accept the license. In Xcode → Settings → Components, install the iOS simulator. | iOS builds and simulators. The app targets iOS/iPadOS 17.0+ |
+| UTF-8 locale | Add `export LANG=en_US.UTF-8` and `export LC_ALL=en_US.UTF-8` to `~/.zprofile` | CocoaPods crashes during `pnpm ios` without it |
 | Xcode command line tools | `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer` | Makes `xcodebuild`/`simctl` use the full Xcode |
 | **Homebrew** | https://brew.sh | Installs the rest |
 | **Node 22 LTS** (≥ 20.19) | `brew install node@22` or nvm | Expo SDK 57 |

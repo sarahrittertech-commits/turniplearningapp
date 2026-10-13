@@ -1,6 +1,6 @@
 # Turnip Learning
 
-A safe, curated video app where young kids (ages 3–9) explore what they're obsessed with — animals, oceans, science, engines, dance — through age-appropriate learning journeys instead of algorithm rabbit holes. iPhone + iPad.
+A safe, curated video app where young kids (ages 3–9) explore what they're obsessed with — animals, oceans, science, engines, dance — through age-appropriate learning journeys instead of algorithm rabbit holes. iPhone + iPad (iOS/iPadOS 17 and newer).
 
 > **Status:** rebuild in progress on the `rebuild` branch — see [docs/architecture.md](docs/architecture.md) and [TODO.md](TODO.md).
 

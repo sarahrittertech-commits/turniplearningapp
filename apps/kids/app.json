@@ -43,7 +43,16 @@
       ],
       "expo-image",
       "expo-status-bar",
-      "expo-screen-orientation"
+      "expo-screen-orientation",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "17.0",
+            "enableSceneSupport": true
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

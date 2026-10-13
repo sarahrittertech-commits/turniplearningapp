@@ -19,6 +19,13 @@ Kids (ages 3–9) curated video app. Founder: Sarah (building with AI tools; exp
 - Player: `expo-video`. Offline: download Mux MP4 with `expo-file-system`.
 - Content is Sarah's own videos → public Mux playback for the pilot; signed playback when subscriptions launch.
 - Pilot: families at home, iPhone + iPad only (no Android yet). Age bands 3–5 and 6–9.
+
+## Platform scope (Oct 13, 2026)
+
+- **Ships to iPhone + iPad only**: one universal iOS app (`supportsTablet`). Web is a development preview only; Android is not built or tested.
+- **Minimum iOS / iPadOS 17.0** (`expo-build-properties` → `ios.deploymentTarget`). Covers iPhone XS/XR and iPad 6th gen (2018) and newer, so older family iPads still work.
+- **Built with Xcode 27 / iOS 27 SDK.** iOS 27 requires the UIKit scene lifecycle; SDK 57 gets it from `ios.enableSceneSupport: true` in `expo-build-properties` (drop it on SDK 58+). Without it the app crashes at launch on iOS 27.
+- CocoaPods needs a UTF-8 locale: run iOS builds with `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8`.
 - Apple Kids Category + COPPA (2025 rule): no third-party analytics/ads SDKs in the app (no Mux Data, Sentry, PostHog, Firebase Analytics); parental gate; child profiles = nickname + avatar + age band only.
 - Sarah redoes the visual design starting Oct 1, 2026 → keep all styling in `src/theme/tokens.ts` and `src/components/ui` so screens don't need rewriting.
 

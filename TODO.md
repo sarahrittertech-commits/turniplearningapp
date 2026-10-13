@@ -15,11 +15,14 @@ Plan and reasoning: [docs/architecture.md](docs/architecture.md). The v0 prototy
 - [x] Quicksand embedded via config plugin; Icon Composer icon (`assets/turnip.icon`)
 - [x] Type-check, lint, `expo-doctor` (21/21) all pass
 - [x] Web preview checked at iPhone (393×852) and iPad (1366×1024) sizes
-- [ ] **Build and run on iOS simulators** — needs Xcode installed (or an EAS simulator build)
+- [x] **Build and run on iOS simulators**: runs on iPhone 18 Pro / iOS 27 (Oct 13). Needed `ios.enableSceneSupport` for iOS 27
+- [x] Set platform scope: iPhone + iPad, minimum iOS/iPadOS 17.0 (Oct 13)
+- [ ] Check on an iPad simulator and on an iOS 17 device or simulator
 - [ ] Check iPhone player rotates to landscape; iPad keeps its orientation
 - [ ] Create Supabase project (US region); write schema migrations from architecture §4.5; seed topics/videos/journeys
 - [ ] Add Supabase `CatalogSource` and switch the app to it
-- [ ] Create Mux account; upload the 8 sample videos (basic quality, 720p + 480p static renditions); put playback IDs in the catalog
+- [x] Create Mux account (Oct 13, 2026)
+- [ ] Re-record the v0 videos and upload them to Mux (basic quality, 720p + 480p static renditions); put playback IDs in the catalog. First one uploaded: jellyfish (Oct 13)
 - [ ] Supabase Edge Function: Mux `video.asset.ready` webhook → `videos` row
 
 ## Phase 2 — Kid experience
