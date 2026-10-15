@@ -39,7 +39,7 @@ export function useLayout(): Layout {
     height,
     isLandscape: width > height,
     gutter: regular ? spacing.xxl : spacing.lg,
-    cardSize: regular ? 170 : 130,
+    cardSize: regular ? 220 : 170,
     videoCardWidth: regular ? 280 : Math.min(240, width * 0.62),
     gridColumns: regular ? 4 : 2,
   };

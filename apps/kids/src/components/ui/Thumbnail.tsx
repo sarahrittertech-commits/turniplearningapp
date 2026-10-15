@@ -1,10 +1,10 @@
 import { Image } from 'expo-image';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { AppText } from './AppText';
+import { Icon } from './Icon';
 import type { Video } from '@/data/types';
 import { muxThumbnailUrl } from '@/lib/mux';
-import { radius, tileColors } from '@/theme/tokens';
+import { colors, radius, tileColors } from '@/theme/tokens';
 
 function colorFor(id: string): string {
   let hash = 0;
@@ -13,19 +13,20 @@ function colorFor(id: string): string {
 }
 
 /**
- * Video artwork: explicit thumbnail → Mux-generated thumbnail → colored emoji tile.
+ * Video artwork: explicit thumbnail → Mux-generated thumbnail → colored tile
+ * with a play mark (no emoji pictures).
  */
 export function Thumbnail({ video, style }: { video: Video; style?: StyleProp<ViewStyle> }) {
   const source =
     video.thumbnail ??
-    (video.source.kind === 'mux' ? muxThumbnailUrl(video.source.playbackId, { width: 480 }) : undefined);
+    (video.source.kind === 'mux' ? muxThumbnailUrl(video.source.playbackId, { width: 640 }) : undefined);
 
   return (
     <View style={[styles.frame, { backgroundColor: colorFor(video.id) }, style]}>
       {source ? (
         <Image source={source} style={StyleSheet.absoluteFill} contentFit="cover" transition={150} />
       ) : (
-        <AppText style={styles.emoji}>{video.emoji}</AppText>
+        <Icon name="play" size={40} color={colors.textOnDark} />
       )}
     </View>
   );
@@ -33,13 +34,9 @@ export function Thumbnail({ video, style }: { video: Video; style?: StyleProp<Vi
 
 const styles = StyleSheet.create({
   frame: {
-    borderRadius: radius.lg,
+    borderRadius: radius.md,
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  emoji: {
-    fontSize: 56,
-    lineHeight: 68,
   },
 });

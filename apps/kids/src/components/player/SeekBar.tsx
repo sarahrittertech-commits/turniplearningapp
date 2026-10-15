@@ -30,7 +30,7 @@ export function SeekBar({
       <View style={styles.track}>
         <View style={[styles.fill, { width: `${progress * 100}%` }]} />
       </View>
-      <View style={[styles.thumb, { left: progress * width - 12 }]} />
+      <View style={[styles.thumb, { left: progress * width - 13 }]} />
     </Pressable>
   );
 }
@@ -41,20 +41,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   track: {
-    height: 8,
-    borderRadius: 4,
+    height: 10,
+    borderRadius: 5,
     backgroundColor: 'rgba(255,255,255,0.25)',
     overflow: 'hidden',
   },
   fill: {
     height: '100%',
-    backgroundColor: colors.accent,
+    backgroundColor: colors.progress,
   },
   thumb: {
     position: 'absolute',
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: '#FFFFFF',
+    width: 26,
+    height: 26,
+    borderRadius: 13,
+    backgroundColor: colors.surface,
+    borderWidth: 3,
+    borderColor: colors.progress,
   },
 });

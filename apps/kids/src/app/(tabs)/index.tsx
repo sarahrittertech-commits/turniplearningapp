@@ -3,10 +3,17 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { JourneyCard, TopicTile, VideoCard } from '@/components/cards';
 import { AppText } from '@/components/ui/AppText';
 import { Rail } from '@/components/ui/Rail';
-import { ScreenHeader } from '@/components/ui/ScreenHeader';
+import { ScreenHeader, useCollapsingHeader } from '@/components/ui/ScreenHeader';
 import { useCatalogState, useJourneys, useTopics, useVideos } from '@/data/CatalogProvider';
 import { useLayout } from '@/theme/layout';
 import { spacing } from '@/theme/tokens';
+
+function greeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return 'Good morning, explorer';
+  if (hour < 17) return 'Good afternoon, explorer';
+  return 'Good evening, explorer';
+}
 
 export default function HomeScreen() {
   const state = useCatalogState();
@@ -14,6 +21,7 @@ export default function HomeScreen() {
   const topics = useTopics();
   const journeys = useJourneys();
   const { gutter, width, sizeClass } = useLayout();
+  const { collapsed, ...scroll } = useCollapsingHeader();
 
   const newVideos = videos.filter((v) => v.isNew);
   const journeyWidth =
@@ -21,14 +29,14 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.screen}>
-      <ScreenHeader title="Home" />
+      <ScreenHeader eyebrow={greeting()} title="Where to today?" collapsed={collapsed} />
       {state.status === 'error' ? (
         <View style={[styles.message, { padding: gutter }]}>
-          <AppText variant="title">😕 Oops!</AppText>
+          <AppText variant="title">Oops!</AppText>
           <AppText>We couldn’t load the videos. Please try again.</AppText>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} {...scroll}>
           {newVideos.length > 0 && (
             <Rail title="New for you">
               {newVideos.map((v) => (
@@ -38,8 +46,8 @@ export default function HomeScreen() {
           )}
 
           <View style={[styles.journeys, { paddingHorizontal: gutter }]}>
-            <AppText variant="heading" accessibilityRole="header">
-              Adventures
+            <AppText variant="section" accessibilityRole="header">
+              Expeditions
             </AppText>
             <View style={styles.journeyRow}>
               {journeys.map((j) => (
@@ -70,8 +78,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingVertical: spacing.xl,
-    gap: spacing.xxl,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xxl,
+    gap: spacing.xl,
   },
   journeys: {
     gap: spacing.md,

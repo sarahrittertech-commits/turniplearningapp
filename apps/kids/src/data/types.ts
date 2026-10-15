@@ -12,6 +12,8 @@ export interface Topic {
   name: string;
   emoji: string;
   color: string;
+  /** Video whose picture represents the topic on its card; defaults to the first video. */
+  coverVideoId?: string;
 }
 
 /** Where the video actually plays from. Screens never build URLs themselves. */

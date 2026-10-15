@@ -3,15 +3,18 @@
     "name": "Turnip",
     "slug": "turnip-kids",
     "owner": "sarahbuildsapps",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "scheme": "turnip",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "bundleIdentifier": "com.turnip.kids",
+      "bundleIdentifier": "com.turniplearning",
       "supportsTablet": true,
-      "icon": "./assets/turnip.icon"
+      "icon": "./assets/turnip.icon",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "plugins": [
       "expo-router",
@@ -20,17 +23,18 @@
         {
           "image": "./assets/images/mascot.png",
           "imageWidth": 220,
-          "backgroundColor": "#A2CE73"
+          "backgroundColor": "#F6F5FB"
         }
       ],
       [
         "expo-font",
         {
           "fonts": [
-            "./assets/fonts/Quicksand-Regular.ttf",
-            "./assets/fonts/Quicksand-Medium.ttf",
-            "./assets/fonts/Quicksand-SemiBold.ttf",
-            "./assets/fonts/Quicksand-Bold.ttf"
+            "./assets/fonts/FrauncesSoft-SemiBold.ttf",
+            "./assets/fonts/DMSans-Regular.ttf",
+            "./assets/fonts/DMSans-Medium.ttf",
+            "./assets/fonts/DMSans-SemiBold.ttf",
+            "./assets/fonts/DMSans-Bold.ttf"
           ]
         }
       ],

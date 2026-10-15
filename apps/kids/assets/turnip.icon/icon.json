@@ -1,59 +1,36 @@
 {
-  "fill-specializations" : [
+  "groups": [
     {
-      "value" : {
-        "automatic-gradient" : "extended-srgb:0.68627,0.32157,0.87059,1.00000"
-      }
-    },
-    {
-      "appearance" : "dark",
-      "value" : {
-        "linear-gradient" : [
-          "extended-srgb:0.34510,0.33725,0.83922,1.00000",
-          "extended-srgb:0.68627,0.32157,0.87059,1.00000"
-        ],
-        "orientation" : {
-          "start" : {
-            "x" : 0.5,
-            "y" : 0
-          },
-          "stop" : {
-            "x" : 0.5,
-            "y" : 0.7
-          }
-        }
-      }
-    }
-  ],
-  "groups" : [
-    {
-      "layers" : [
+      "layers": [
         {
-          "image-name" : "turnipMascot.png",
-          "name" : "turnipMascot",
-          "position" : {
-            "scale" : 1,
-            "translation-in-points" : [
-              19.73272705078125,
-              -46.429931640625
+          "image-name": "turnipMascot.png",
+          "name": "turnipMascot",
+          "position": {
+            "scale": 0.74,
+            "translation-in-points": [
+              0,
+              0
             ]
           }
         }
       ],
-      "shadow" : {
-        "kind" : "neutral",
-        "opacity" : 0.5
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
       },
-      "translucency" : {
-        "enabled" : true,
-        "value" : 0.5
+      "translucency": {
+        "enabled": false,
+        "value": 0.5
       }
     }
   ],
-  "supported-platforms" : {
-    "circles" : [
+  "supported-platforms": {
+    "circles": [
       "watchOS"
     ],
-    "squares" : "shared"
+    "squares": "shared"
+  },
+  "fill": {
+    "solid": "extended-srgb:0.71765,0.84314,0.49804,1.00000"
   }
 }

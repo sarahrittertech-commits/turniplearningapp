@@ -31,9 +31,13 @@ export default function VideoScreen() {
   if (!video) {
     return (
       <View style={styles.missing}>
-        <AppText variant="title">{state.status === 'loading' ? 'Loading…' : "We can't find that video 🙈"}</AppText>
-        <Tappable style={styles.pill} onPress={close}>
-          <AppText variant="heading">Go Home</AppText>
+        <AppText variant="title" color={colors.textOnDark}>
+          {state.status === 'loading' ? 'Loading…' : "We can't find that video"}
+        </AppText>
+        <Tappable style={styles.pill} onPress={close} accessibilityRole="button">
+          <AppText variant="button" color={colors.textOnDark}>
+            Go home
+          </AppText>
         </Tappable>
       </View>
     );
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
   },
   pill: {
-    backgroundColor: colors.danger,
+    backgroundColor: colors.quiet,
     paddingHorizontal: spacing.xxl,
     paddingVertical: spacing.md,
     borderRadius: radius.lg,

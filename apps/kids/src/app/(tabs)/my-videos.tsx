@@ -1,26 +1,28 @@
 import { StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/ui/AppText';
+import { Mascot } from '@/components/ui/Mascot';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { useLayout } from '@/theme/layout';
-import { colors, radius, spacing } from '@/theme/tokens';
+import { cardShadow, colors, radius, spacing } from '@/theme/tokens';
 
-/** Downloaded videos. The download manager arrives in Phase 4 (offline). */
-export default function MyVideosScreen() {
+/** Backpack: downloaded videos. The download manager arrives in Phase 4 (offline). */
+export default function BackpackScreen() {
   const { gutter } = useLayout();
   return (
     <View style={styles.screen}>
-      <ScreenHeader title="My Videos" />
-      <View style={[styles.empty, { paddingHorizontal: gutter }]}>
-        <View style={styles.iconBox}>
-          <AppText style={styles.icon}>⬇️</AppText>
+      <ScreenHeader eyebrow="Backpack" title="Packing for a trip?" />
+      <View style={[styles.content, { paddingHorizontal: gutter }]}>
+        <AppText color={colors.textMuted}>Videos packed in your backpack play without internet.</AppText>
+        <View style={[styles.emptyCard, cardShadow]}>
+          <Mascot height={72} />
+          <View style={styles.emptyText}>
+            <AppText variant="heading" color={colors.textOnDark}>
+              Your backpack is empty
+            </AppText>
+            <AppText color={colors.textOnDarkMuted}>Going on a trip? Ask a grown-up to pack some videos.</AppText>
+          </View>
         </View>
-        <AppText variant="title" style={styles.center}>
-          No saved videos yet
-        </AppText>
-        <AppText color={colors.textOnDarkMuted} style={styles.center}>
-          Ask a grown-up to save videos so you can watch them in the car!
-        </AppText>
       </View>
     </View>
   );
@@ -30,26 +32,21 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-  empty: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.md,
+  content: {
+    paddingTop: spacing.xl,
+    gap: spacing.lg,
   },
-  iconBox: {
-    width: 112,
-    height: 112,
+  emptyCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.lg,
+    backgroundColor: colors.darkCard,
     borderRadius: radius.xl,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: spacing.lg,
+    maxWidth: 560,
   },
-  icon: {
-    fontSize: 52,
-    lineHeight: 62,
-  },
-  center: {
-    textAlign: 'center',
-    maxWidth: 420,
+  emptyText: {
+    flex: 1,
+    gap: spacing.xs,
   },
 });

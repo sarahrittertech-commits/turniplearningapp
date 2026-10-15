@@ -10,7 +10,7 @@ export function Rail({ title, children }: { title: string; children: ReactNode }
   const { gutter } = useLayout();
   return (
     <View style={styles.section}>
-      <AppText variant="heading" style={{ paddingHorizontal: gutter }} accessibilityRole="header">
+      <AppText variant="section" style={{ paddingHorizontal: gutter }} accessibilityRole="header">
         {title}
       </AppText>
       <ScrollView
@@ -30,5 +30,8 @@ const styles = StyleSheet.create({
   },
   row: {
     gap: spacing.lg,
+    // Room for card shadows so they aren't clipped by the scroll view.
+    paddingTop: spacing.xs,
+    paddingBottom: spacing.lg,
   },
 });
