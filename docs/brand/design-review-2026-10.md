@@ -58,6 +58,44 @@ These are mirrored in the guide's "Open questions" list:
 6. Test Andika against DM Sans for kid labels with 4–6-year-olds.
 7. Explorer-hat sketches.
 
+## October 13: old brand archive
+
+Sarah found 2017-era Turnip Learning material: the original logo, a print business-card file (five colored card backs), and product screenshots (interactive templates, a sorting game). The files stay out of the repo: the cards carry personal contact details, and the repo is public.
+
+What it shows:
+- **The softer palette isn't new.** The card back plum-gray `#6F6C89` has the same hue as Turnip Lavender `#8B86B8` (246°), and the logo leaf matches Sprout Green. The app's `#73318F` purple was the outlier. This supports open question 1.
+- **Complementary accents already existed.** The card backs were plum, olive `#788C5D`, coral `#CD5E55`, teal `#4B8485` and charcoal `#353538`. Coral and teal sit on either side of lavender's opposite (a split-complementary set), with sprout almost directly opposite.
+- **Other recurring elements:** the "Grow with us." tagline in a soft slab serif, a faint sprout line drawing as a background, a tracked "LEARNING" under the wordmark, and (in the product) a light science-doodle pattern on lavender. The tan sorting boxes stay retired.
+- The old wordmark is a custom rounded bold "Turnip" with a turnip glyph. The wordmark is parked, so this is reference only.
+
+Explored: a new canvas board, *Archive + complementary colors (Oct 13)*, shows three options side by side on a Backpack sample. All three keep lavender, plum and sprout:
+- **A · Heritage** (suggested): add Teal `#3E7F80` and Coral `#C4524A`. Both are darkened from the cards so white text passes AA (4.6 and 4.5 : 1).
+- **B · Calm teal:** add teal plus Sea Glass `#D6ECEA` panels; coral only for real errors.
+- **C · Guide as written:** Soft Blush and Fresh Sage only; plum carries every action.
+
+**Decided (Oct 13):** Sarah chose **A · Heritage**: teal and coral from the old cards as accents. They're now in guide §2.
+
+Sarah also wants to use the **2017 logo** (not the mascot) and the **sprout drawing** from the card backs in the brand and the app. A second board, *Logo, turnip icon + sprout (Oct 13)*, shows:
+- logo color options;
+- the turnip icon on its own (app icon, small sizes);
+- the sprout as a faint background;
+- three sample screens: splash, grown-up area, and an empty Backpack.
+
+The proposal is in guide §13.13.
+
+Later on Oct 13, Sarah's follow-ups:
+- **Logo:** no plum logo. It's Turnip Lavender on light screens.
+- **Player:** "Keep watching" was coral, which reads as stop, so it's now Sprout Green. The player also lost its navy, cream and condensed type. "Go home" is Glasses Slate `#585878`, a blue-gray, with white text (6.8 : 1). White looked off, and lavender was tried first.
+- **"Which Turnip feels right?" board:** redone in the new palette. The 2017 logo is suggested; Fraunces, Nunito Black and Fredoka are the alternatives.
+- **Secondary shades:** shade families for each brand color, plus a possible earthy brown and sunny yellow (guide §13.14).
+- **Secondary colors:** Heritage Teal, Sunny Yellow and Earth Brown. The landing site's mint "today" band became dark teal with a yellow heading, and the site now shows the three secondary swatches.
+- **Two reskins of the iPhone screens,** same layouts (Home, World, Expedition, Backpack, sign-in):
+  - **A · Teal trail:** blue-gray background, white menu bar, teal dark cards.
+  - **B · Field notebook:** lavender-mist background, teal menu bar, Earth Brown dark cards.
+  - Both use yellow for highlights and rewards, sprout green for go/play, Fraunces + DM Sans, the recolored mascot, and the 2017 logo on sign-in.
+  - **Decided: Sarah chose B · Field notebook** ("the one I would use").
+- **Wild Explorer style guide board:** updated to Mist, lavender, sprout, teal and coral, with Fraunces + DM Sans. No navy, cream, coral-for-play or all caps.
+
 ## Next steps
 
 1. Sarah answers the open questions.

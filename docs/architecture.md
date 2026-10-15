@@ -118,6 +118,8 @@ One App Store listing, one binary (`ios.supportsTablet: true`). What changes ver
 
 Since the content is our own, the pilot uses **public** playback IDs (no tokens). Signed playback is turned on when subscriptions launch.
 
+**Status (Oct 14, 2026):** in use. All catalog videos stream from Mux. The account is on **pay-as-you-go**: the free plan stops at 10 videos; pay-as-you-go has no monthly fee and includes a $20 monthly usage credit, and pilot usage costs cents. Storage (about $0.003 per video-minute per month) is charged even for videos nobody watches; delivery is free for the first 100,000 minutes a month. Offline MP4 downloads (static renditions) are an add-on with no published price; check the cost before building the Backpack.
+
 ### 4.3 Playback & offline
 
 - **Streaming:** `expo-video` with the Mux HLS URL. Supports captions/subtitle tracks, Picture-in-Picture, and FairPlay DRM if a content partner ever requires it.

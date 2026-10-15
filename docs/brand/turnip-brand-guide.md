@@ -58,6 +58,9 @@ Inspired by Turnip's lavender body, warm cream face, leafy green sprout, and sof
 | **Fresh Sage** | `#DCE8C1` | Subtle panels, backgrounds, secondary illustrations |
 | **Deep Ink** | `#37364F` | High-contrast body text, accessibility-critical content |
 | **Glasses Slate** | `#585878` | *Added Oct 12, taken from the mascot's glasses in the artwork.* The neutral gray for app UI: secondary text, icons, inactive tabs, timestamps, input borders. Readable on light backgrounds (5.2 : 1 or better); white text on it also works (6.8 : 1). |
+| **Heritage Teal** | `#3E7F80` | *Added Oct 13, from the 2017 business cards (darkened to pass AA).* Grown-up area, info, settings icons, secondary buttons. White text on it 4.6 : 1. Brand screens only, never inside a world. |
+| **Heritage Coral** | `#C4524A` | *Added Oct 13, from the 2017 cards.* Sparingly: remove/clear actions, warnings, the favorites heart. White text on it 4.5 : 1 (just passes; keep text 16 pt+ bold). Brand screens only. |
+| **Sea Glass** / **Coral Blush** | `#D6ECEA` / `#F7DEDB` | *Added Oct 13.* Pale tints of teal and coral for info panels and icon backgrounds. Shapes only, never text. Text on Sea Glass uses `#24585A`. |
 | **Slate Mist** | `#A9AABB` | *Added Oct 12.* A light companion to Glasses Slate for dividers, disabled states, progress-bar tracks and subtle borders. Decorative only, never for text (1.75 : 1 on cream). |
 
 **Plum vs slate:** they are close cousins, so give them different jobs. **Glasses Plum** carries the brand: headings, logo, thick illustration outlines, primary buttons. **Glasses Slate** is the quiet neutral: supporting text and interface details. Never use both for the same role on one screen.
@@ -460,6 +463,53 @@ Sarah likes Turnip's balance of fun and grown-up, and is open to new colours. Cr
 - Have the illustrator redraw the final art as clean vector (SVG), with the expressions from 13.6.
 - These studies are quick automatic recolours, good for choosing a direction but not final art.
 
+### 13.12 Complementary accents from the 2017 brand (Oct 13) ✅ *Sarah chose A · Heritage (teal + coral), Oct 13; added to §2*
+
+The old business cards used coral and teal next to lavender and sprout. They are a split-complementary set around Turnip Lavender. Options (canvas board *Archive + complementary colors*):
+
+| Option | Adds | Jobs | Text contrast |
+|---|---|---|---|
+| **A · Heritage** (suggested) | Teal `#3E7F80`, Coral `#C4524A`, tints Sea Glass `#D6ECEA` and Coral Blush `#F7DEDB` | Teal = grown-up and info; coral = remove, warnings, favorites heart; sprout = done/saved | White on teal 4.6 : 1 ✅, white on coral 4.5 : 1 ✅ (just) |
+| B · Calm teal | Teal `#3E7F80`, Sea Glass `#D6ECEA`; coral for errors only | Teal = grown-up and info; slate = remove | As A |
+| C · Guide as written | Nothing new (Soft Blush, Fresh Sage) | Plum does every action; blush and sage are panels only | Blush and sage can't carry text |
+
+**Go vs stop (Oct 13, from Sarah's player feedback):** play, "Keep watching" and continue actions are **Sprout Green with Deep Ink text** (7.2 : 1). Green means go. Coral never goes on a play or continue button, because red reads as stop.
+
+**Rule for any option:** brand accents stay on brand screens (grown-ups, Backpack, sign-in, alerts). They never appear on world cards or inside a world, so teal doesn't get confused with Nature green or Earth blue.
+
+### 13.13 The 2017 logo, turnip icon and sprout (Oct 13)
+
+*Sarah wants to use the original logo (not the mascot) and the sprout drawing from the card backs in the brand and the app.* This reopens the parked wordmark question, at her request. It also changes §3's plan to set a new Fraunces wordmark. Canvas board: *Logo, turnip icon + sprout (Oct 13)*.
+
+- **Logo:** the 2017 rounded bold "Turnip" with a small turnip glyph, plus a tracked "LEARNING" line as on the cards. Proposed colors:
+  - Turnip Lavender `#8B86B8` with Sprout leaves on light backgrounds (3.1 : 1 on Lavender Mist). It matches the mascot's body. *A plum version was shown and rejected by Sarah, Oct 13.* The original periwinkle `#9EA9D4` is only 2.1 : 1, so keep it for print.
+  - White on Turnip Lavender or Heritage Teal.
+- **Turnip icon:** the logo's turnip on its own. It stays readable at 24 px, unlike the mascot face, so it becomes the app icon and the small brand mark. This would replace §9's "use a cropped mascot face for small sizes".
+- **Sprout:** the seed-to-sprout line drawing from the card backs, used as a faint background texture: white at 16–20% on lavender or teal, lavender at about 12–14% on light backgrounds. One per screen. Never on photos, world cards, or behind small text.
+- **Who does what:** logo = the company (splash, grown-up screens, App Store, print); icon = small sizes and the app icon; mascot = the character inside kid screens; sprout = background.
+- **Needed:** the original vector files (AI/SVG) for the logo and sprout, or a clean SVG redraw. The canvas versions were traced from a 654 px PNG and the print PDF.
+
+### 13.14 Secondary shades, plus a possible brown and yellow (Oct 13)
+
+Canvas board: *Secondary shades (Oct 13)*. Each brand color gets a shade family:
+
+| Color | 50 page tint | 100 panel | 200 border | Main | 700 pressed | 800 text on tints |
+|---|---|---|---|---|---|---|
+| Turnip Lavender | `#F6F5FB` (Mist) | `#E5E4F1` | `#CBC9DF` | `#8B86B8` | `#6A668E` | `#524F6F` |
+| Sprout Green | `#F6FAEE` | `#E8F2D6` | `#D3E7AE` | `#B7D77F` | `#7FA548` (shapes only) | `#3F6B1A` |
+| Heritage Teal | `#EEF5F5` | `#D6ECEA` | `#A8C9C9` | `#3E7F80` | `#346266` | `#2D4C54` |
+| Heritage Coral | `#FBF1F0` | `#F7DEDB` | `#E8B4B0` | `#C4524A` | `#A8433C` | `#7E3532` |
+| Glasses Slate (blue-gray) | `#F0F0F4` | `#DADAE1` | `#A9AABB` | `#585878` | `#474661` | `#37364F` |
+
+**Rules:**
+- Text on a tint uses that color's 800. Every pairing passes 4.5 : 1.
+- White text works on Teal, Coral and Slate, and on Lavender 700–800.
+- Never put white text on Sprout or plain Lavender at small sizes.
+
+**Secondary colors (Sarah, Oct 13): teal, yellow and brown go together.** The landing site shows them as a set. Yellow and brown details:
+- **Earth Brown:** Bark `#7A5236` (alternative: Cocoa `#6B4E3D`), 700 `#5E4233`, 800 `#4A3630`. White text on Bark is 6.8 : 1. Use it for roots, seeds, explorer-hat details, field-notebook touches and print. **No pale tints:** they turn into the retired tan.
+- **Sunny Yellow:** Sunbeam `#F4CF4A` (alternative: Honey `#F2C14E`), highlight `#FAE9AE`, shadow `#D9AE2A`. Always Deep Ink text on it (7.7 : 1). Use it only for small sparks: stars, earned badges, "new" dots. **No pale tints:** they turn into cream. It is kept yellower than the Animals mango `#F2A53A`.
+
 ### Open questions for Sarah
 
 1. ~~Accept Pairing A?~~ Decided: Fraunces + DM Sans, adapted for mobile (§3). Still to test: Andika for kid labels.
@@ -470,3 +520,6 @@ Sarah likes Turnip's balance of fun and grown-up, and is open to new colours. Cr
 6. App background: Lavender Mist, Warm White, Clean White, or keep cream (13.9)?
 7. Light mode only for the pilot, dark mode later (13.10)?
 8. Which mascot recolour: 2 Polished, 3 Fresh Lavender, or 4 Turnip Violet (13.11)?
+9. ~~Complementary accents?~~ Decided Oct 13: A · Heritage, teal + coral (§2).
+10. Use the 2017 logo, turnip icon and sprout drawing (13.13)? (Logo on light screens: Turnip Lavender, not plum.) Where are the original vector files?
+11. ~~Brown and yellow?~~ Decided Oct 13: **secondary colors are Heritage Teal, Sunny Yellow `#F4CF4A` and Earth Brown `#7A5236`** (13.14). Coral stays for remove and warnings.

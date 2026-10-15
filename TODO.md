@@ -12,7 +12,7 @@ Plan and reasoning: [docs/architecture.md](docs/architecture.md). The v0 prototy
 - [x] Catalog data layer (`src/data`) with a swappable source — local mock today
 - [x] Screens: Home, Explore (topics), Topic, My Videos (empty state), Player
 - [x] Kid player on `expo-video`: giant Play / Go Home, tap-to-seek, "What's next" at the end
-- [x] Quicksand embedded via config plugin; Icon Composer icon (`assets/turnip.icon`)
+- [x] Fonts embedded via config plugin; Icon Composer icon (`assets/turnip.icon`)
 - [x] Type-check, lint, `expo-doctor` (21/21) all pass
 - [x] Web preview checked at iPhone (393×852) and iPad (1366×1024) sizes
 - [x] **Build and run on iOS simulators**: runs on iPhone 18 Pro / iOS 27 (Oct 13). Needed `ios.enableSceneSupport` for iOS 27
@@ -60,10 +60,32 @@ Plan and reasoning: [docs/architecture.md](docs/architecture.md). The v0 prototy
 - [ ] Sarah: answer the open questions in the brand guide (palette, background, light-only, mascot recolor)
 - [ ] Final mascot art as vector + expression set (happy, thinking, surprised, celebrating, sleepy, pointing); explorer-hat sketches
 - [ ] Update prototype to the agreed palette, fonts and mascot
-- [ ] Redo app designs (Sarah). Restyle via `src/theme/tokens.ts` and `src/components/ui` — screens should need few changes.
-- [ ] Bundle Fraunces (Soft, SemiBold) + DM Sans; remove Quicksand
+- [x] Facelift to Version B · Field notebook (Oct 13): tokens, Fraunces Soft + DM Sans (Quicksand removed), line icons (react-native-svg), teal tab bar, topic and expedition cards, player buttons, recolored mascot (study 2)
+- [ ] Still to restyle: the 2017 logo (needs vector files), sprout background texture, profile picker and sign-in (not built yet)
+- [ ] Check the facelift on iPad (only iPhone checked so far)
 - [ ] Add worlds (Nature, Animals, Earth Science, Biology) → topics to the catalog data model
+- [ ] **Talk to Turnip** (roadmap, Oct 14): tap the header bubble and say a topic ("bears", "trees", "science") to jump there. On-device speech recognition only (`expo-speech-recognition`, `requiresOnDeviceRecognition`) so no child audio is stored or sent (COPPA); mic/speech permission asked once behind the parent gate; keyword lists per topic/video; 3 picture choices when it doesn't understand. Needs a new native build.
 - [ ] iPhone layouts for Home, Explore, Player, Profile picker, Login
+
+## App Store v1 placeholder (started Oct 14, 2026)
+
+Kids Category, ages 6–8; iPhone + iPad; app ID `com.turniplearning`; version 1.0.0.
+
+- [x] Removed the 3 local-only sample videos (Blue Whale was Nat Geo footage), the empty Whales topic, and the sample-server helper; 13 videos, all on Mux
+- [x] Hid the Backpack tab (`HIDDEN_TABS` in `src/app/(tabs)/_layout.tsx`) until offline downloads exist
+- [x] Bigger app icon on Sprout Green; player controls fade after 1 s; header shrinks on scroll
+- [ ] Check the iPad layout (dev build was running in the iPad Pro 13" simulator when we paused)
+- [ ] App Store screenshots: iPhone 18 Pro Max sim (1320×2868) and iPad Pro 13" sim (2064×2752), real screens only; skip the preview video for v1
+- [ ] Privacy policy + support page on the landing site (ask Sarah before pushing)
+- [ ] App Store Connect listing: description, keywords, age band 6–8, privacy answers "Data Not Collected"
+- [ ] Production build (`eas build --profile production`) and `eas submit` (Sarah answers Apple prompts)
+- [ ] Ask Sarah for the Bike Brevard media rejection text and check Turnip against it
+- [ ] Sarah: redo some videos, then send the new Mux playback IDs (Claude swaps them in the catalog):
+  - Mixing Colors and Vinegar Balloon Experiment: only 360p on Mux; re-upload a 1080p original so they're sharp on iPad
+  - How Rainbows Work: captions are burned into the picture; upload a clean version and use a separate caption track (CC button)
+  - Jellyfish: first caption is 2 sentences for 12 s; split into short lines (~30 characters, 1–4 s each) for early readers
+  - Sea Turtles, Jellyfish: Mux's auto thumbnail lands on a frame with text; pick a cleaner thumbnail time
+  - Blue Whale, Frogfish, Tree Kangaroo: removed for v1; re-add once they're Sarah's own videos on Mux
 
 ## Known issues
 

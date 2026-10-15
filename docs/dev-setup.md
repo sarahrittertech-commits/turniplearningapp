@@ -25,15 +25,14 @@ git switch rebuild
 pnpm install
 ```
 
-## 3. Sample videos (development only)
+## 3. Videos
 
-The 8 sample videos (~540 MB) are not in git. Copy the folder `artifacts/TurnipAppSampleVideo/` from the old computer into the same path on the new one (AirDrop, a USB drive, or `scp` with Remote Login enabled). Once the videos are uploaded to Mux this step goes away.
+All catalog videos stream from Mux (Oct 14, 2026), so no local video files are needed. The old v0 sample videos (`pnpm samples` on :8765) are no longer used by the app.
 
 ## 4. Run
 
 ```bash
-pnpm samples      # terminal 1 — serves sample videos on :8765
-pnpm kids         # terminal 2 — Expo dev server; press i for iOS simulator
+pnpm kids         # Expo dev server; press i for iOS simulator
 ```
 
 First iOS run: `pnpm ios` (runs `expo run:ios`, which generates `apps/kids/ios/` and builds). The `ios/` folder is generated — never edit or commit it.
@@ -53,3 +52,19 @@ To pick a device: `pnpm --filter @turnip/kids exec expo run:ios --device` and ch
 cd apps/kids
 npx tsc --noEmit && npx expo lint && npx expo-doctor
 ```
+
+## 7. Build for a real iPhone (Expo)
+
+```bash
+cd apps/kids
+npx eas-cli@latest build --platform ios --profile preview
+```
+
+You answer the prompts in the terminal: log in to Apple (saved in Keychain after the first time), reuse the distribution certificate, and register your iPhone through the QR code the first time. The build runs in Expo's cloud (10–20 minutes) and ends with a QR code to install it. Turn on Developer Mode on the iPhone if asked.
+
+## 8. Things that trip up this Mac
+
+- **Disk space:** each iOS build needs a few GB. If builds fail with "No space left on device", delete `~/Library/Developer/Xcode/DerivedData/*` and run `xcrun simctl delete unavailable`.
+- **CocoaPods** needs a UTF-8 locale: `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8` (already in `~/.zprofile`).
+- **Changing the bundle ID** (or adding a native library) means a fresh development build: `npx expo prebuild --platform ios --clean`, then `npx expo run:ios`.
+- **Simulator screen recording** (`xcrun simctl io … recordVideo`) fails with "Host recording is already in progress" while another app is streaming the simulator screen. Close that view first, or record on a real iPhone instead.

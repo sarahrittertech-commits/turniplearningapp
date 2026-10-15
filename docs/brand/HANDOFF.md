@@ -1,18 +1,21 @@
 # Design handoff: pick up here
 
-*Last updated October 13, 2026.* Use this to continue the redesign on any machine. Claude: read this, then [design-review-2026-10.md](design-review-2026-10.md) (history and decisions), then [turnip-brand-guide.md](turnip-brand-guide.md) (the rules, plus open questions in §13).
+*Last updated October 15, 2026.* Use this to continue the redesign on any machine. Claude: read this, then [design-review-2026-10.md](design-review-2026-10.md) (history and decisions), then [turnip-brand-guide.md](turnip-brand-guide.md) (the rules, plus open questions in §13).
 
 ## Where things stand
 
-- **Phase:** design exploration. **No app code has changed yet.** `apps/kids` still has the September look: purple `#73318F`, green `#A2CE73`, Quicksand, emoji tiles.
-- **Brand:** Turnip Learning. The draft brand guide is in the repo. Fonts are decided: Fraunces for the logo and display, DM Sans for UI. World colors are decided: bold, used as navigation.
+- **Phase:** the app has the **Version B · Field notebook** look (built Oct 13–14) and is being prepared for an App Store v1. What was built and why: [docs/history/2026-10-13-mux-facelift-app-store.md](../history/2026-10-13-mux-facelift-app-store.md).
+- **Decided in the build:** DM Sans for all app text (Fraunces only for the company brand: site, logo, App Store); a Sprout Green header band where Turnip asks each screen's question in a speech bubble; mascot = recolor study 2 with medium plum lines and a white sticker edge; app icon = Turnip on Sprout Green.
+- **Brand:** Turnip Learning. World colors are decided: bold, used as navigation.
 - **Waiting on Sarah** (guide §13, "Open questions"):
   1. Adopt the softer palette (lavender / plum / sprout)?
   2. App background: Lavender Mist (suggested), Warm White, or Clean White.
   3. Light mode only for the pilot (suggested)?
   4. Mascot recolor: study 2, 3 or 4 in [`design/mascot-recolor/`](../../design/mascot-recolor/).
   5. Who draws the final mascot art and the expression set.
-- **Parked by Sarah:** the Turnip wordmark and login screen styling. She'll tackle those herself. Don't iterate on them unless she asks.
+  6. ~~Complementary accents~~: decided Oct 13: Heritage Teal `#3E7F80` + Heritage Coral `#C4524A` (guide §2).
+  7. Use the 2017 logo, turnip icon and sprout drawing (guide §13.13, canvas board "Logo, turnip icon + sprout")? Find the original vector files.
+- **Parked by Sarah:** login screen styling. (Wordmark: Sarah reopened it on Oct 13 by bringing back the 2017 logo; see guide §13.13.) Previously parked: the Turnip wordmark and login screen styling. She'll tackle those herself. Don't iterate on them unless she asks.
 
 ## What Sarah likes and doesn't like
 
@@ -34,6 +37,10 @@
 - Anything "babyish": emoji as main pictures, clip art, rainbow backgrounds.
 
 **How to work with Sarah on design**
+- **Green means go:** play, continue and "keep watching" are Sprout Green. Never put coral or red on them. Quiet buttons ("Go home") are Glasses Slate blue-gray.
+- **Brown and yellow only at full strength.** Pale versions read as the retired tan and cream.
+- **Logo:** the 2017 logo, never in plum.
+- Short replies like "don't use the purple" may mean the last thing discussed, not the screen in view. Ask, or take the narrowest reading.
 - Show options **side by side** and let her pick. Explain why in plain words.
 - Change only what she asked for. Too many changes at once made the work "fall off the map" (Oct 12).
 - Wild Explorer is for the **learning worlds** (photos, icons, expeditions), not the company brand.
@@ -60,6 +67,18 @@ python3 design/mascot-recolor/recolor.py apps/kids/assets/images/mascot.png desi
 ```
 
 It needs Python 3 with Pillow (`pip3 install pillow`). The output is for picking a direction; final art should be redrawn as vector by an illustrator.
+
+## Latest (Oct 13 evening)
+
+- **Decided Oct 13: Version B · Field notebook** is the app direction (canvas, second row right of the originals):
+  - lavender-mist background and a teal menu bar;
+  - Earth Brown dark cards with Sunny Yellow highlights;
+  - sprout green for go/play, Fraunces + DM Sans, the recolored mascot.
+
+  This is what gets built into `tokens.ts` next.
+- **Expedition cards take a color that fits the expedition (Oct 13):** Ocean Friends uses the Version A teal `#346266`, with track `#2D4C54`. Deep Sea blue `#1F5A84` (track `#174565`) also looks good to Sarah; either works. Brown stays the default dark card.
+- **Sign-in top (Version A row):** "top 2" is good for now: the original 2017 logo, in its own periwinkle and green, on a white card over plain Sprout Green, with dark text. Version B's sign-in still has the teal top; open question whether to swap in this green logo-card top. Possible later: the olive `#788C5D` from the old green business card instead, with white text.
+- **Landing-site color change** is edited locally in `~/Documents/PushPopDev/turnip-learning-site`. It is **not pushed**; ask before pushing.
 
 ## Next steps (in order)
 
